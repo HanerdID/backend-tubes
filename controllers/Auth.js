@@ -40,3 +40,13 @@ export const Login = async (req, res) => {
     accessToken,
   });
 };
+
+export const Me = async (req, res) => {
+  const user = await Pengguna.findOne({
+    where: {
+      idpengguna: req.user.penggunaId,
+    },
+  });
+
+  res.status(200).json(user);
+}
