@@ -14,7 +14,7 @@ export const getDetailTransaksiById = async (req, res) => {
   try {
     const response = await DetailTransaksi.findOne({
       where: {
-        iddetailtransaksi: req.params.id,
+        idtransaksi: req.params.id,
       },
     });
     res.status(200).json(response);
