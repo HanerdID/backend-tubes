@@ -49,6 +49,28 @@ export const updateDetailTransaksi = async (req, res) => {
   }
 };
 
+export const updateMetodePembayaran = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { metodePembayaran } = req.body;
+
+    const transaksi = await Transaksi.findByPk(id);
+
+    if (!transaksi) {
+      return res.status(404).json({ message: "Transaction not found" });
+    }
+
+    const updatedTransaksi = await Transaksi.update(
+      { metodePembayaran: metodePembayaran },
+      { where: { idtransaksi: id } }
+    );
+
+    res.status(200).json(updatedTransaksi);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const deleteDetailTransaksi = async (req, res) => {
   try {
     // Temukan idtransaksi dari DetailTransaksi yang akan dihapus
