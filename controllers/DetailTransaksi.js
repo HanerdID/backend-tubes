@@ -25,11 +25,24 @@ export const getDetailTransaksiById = async (req, res) => {
 
 export const updateDetailTransaksi = async (req, res) => {
   try {
-    const response = await DetailTransaksi.update(req.body, {
-      where: {
-        iddetailtransaksi: req.params.id,
-      },
-    });
+    const detailTransaksi = await DetailTransaksi.findByPk(req.params.id);
+
+    if (!detailTransaksi) {
+      return res.status(404).json({ message: "Detail transaksi not found" });
+    }
+
+    const currentStatus = detailTransaksi.status;
+    const newStatus = currentStatus === "aktif" ? "batal" : "aktif";
+    console.log(newStatus);
+    const response = await DetailTransaksi.update(
+      { status: newStatus },
+      {
+        where: {
+          idtransaksi: req.params.id,
+        },
+      }
+    );
+
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -38,12 +51,10 @@ export const updateDetailTransaksi = async (req, res) => {
 
 export const deleteDetailTransaksi = async (req, res) => {
   try {
-    const { id } = req.params;
-
     // Temukan idtransaksi dari DetailTransaksi yang akan dihapus
     const detailTransaksi = await DetailTransaksi.findOne({
       where: {
-        iddetailtransaksi: id,
+        idtransaksi: req.params.id,
       },
     });
 
@@ -53,14 +64,12 @@ export const deleteDetailTransaksi = async (req, res) => {
 
     const idtransaksi = detailTransaksi.idtransaksi;
 
-    // Hapus semua DetailTransaksi yang memiliki idtransaksi yang sama
     await DetailTransaksi.destroy({
       where: {
         idtransaksi: idtransaksi,
       },
     });
 
-    // Hapus transaksi yang memiliki idtransaksi yang sama
     await Transaksi.destroy({
       where: {
         idtransaksi: idtransaksi,
