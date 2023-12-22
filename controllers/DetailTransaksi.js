@@ -16,7 +16,13 @@ export const getDetailTransaksiById = async (req, res) => {
       where: {
         idtransaksi: req.params.id,
       },
+      include: {
+        model: Transaksi,
+        as: "transaksi",
+        attributes: ["metodepembayaran"],
+      },
     });
+
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -51,21 +57,18 @@ export const updateDetailTransaksi = async (req, res) => {
 
 export const updateMetodePembayaran = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { metodePembayaran } = req.body;
-
-    const transaksi = await Transaksi.findByPk(id);
+    const transaksi = await Transaksi.findByPk(req.params.id);
+    console.log(req.body);
 
     if (!transaksi) {
       return res.status(404).json({ message: "Transaction not found" });
     }
-
     const updatedTransaksi = await Transaksi.update(
-      { metodePembayaran: metodePembayaran },
-      { where: { idtransaksi: id } }
+      { metodepembayaran: req.body.metodepembayaran },
+      { where: { idtransaksi: req.params.id } }
     );
 
-    res.status(200).json(updatedTransaksi);
+    res.status(200).json({ message: "Transaction updated" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

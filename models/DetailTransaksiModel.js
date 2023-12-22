@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
+import Transaksi from "./TransaksiModel.js";
 
 const { DataTypes } = Sequelize;
 
@@ -66,5 +67,10 @@ const DetailTransaksi = db.define(
     timestamps: false,
   }
 );
+
+DetailTransaksi.belongsTo(Transaksi, {
+  foreignKey: "idtransaksi",
+  as: "transaksi",
+});
 
 export default DetailTransaksi;

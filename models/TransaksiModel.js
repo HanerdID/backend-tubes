@@ -86,12 +86,12 @@ const Transaksi = db.define(
     },
 
     metodepembayaran: {
-        type: DataTypes.ENUM("cash", "kartu debit", "kartu kredit", "qris"),
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        },
-        },
+      type: DataTypes.ENUM("cash", "kartu debit", "kartu kredit", "qris"),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
 
     totaldiskon: {
       type: DataTypes.STRING,
@@ -114,5 +114,10 @@ const Transaksi = db.define(
     timestamps: false,
   }
 );
+
+Transaksi.hasOne(Transaksi, {
+  foreignKey: "idtransaksi",
+  as: "transaksi",
+});
 
 export default Transaksi;
