@@ -3,6 +3,6 @@ import { getAktivitasPengguna } from "../controllers/AktivitasPengguna.js";
 
 const router = express.Router();
 
-router.get("/aktivitaspengguna", getAktivitasPengguna);
+router.get("/AktivitasPengguna", getAktivitasPengguna);
 
 export default router;

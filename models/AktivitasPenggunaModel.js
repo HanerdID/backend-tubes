@@ -4,7 +4,7 @@ import db from "../config/Database.js";
 const { DataTypes } = Sequelize;
 
 const AktivitasPengguna = db.define(
-  "aktivitaspengguna",
+  "AktivitasPengguna",
   {
     idaktivitas: {
       type: DataTypes.INTEGER,
@@ -44,7 +44,6 @@ const AktivitasPengguna = db.define(
         notEmpty: true,
       },
     },
-
   },
   {
     freezeTableName: true,

@@ -120,4 +120,6 @@ Transaksi.hasOne(Transaksi, {
   as: "transaksi",
 });
 
+// Transaksi.sync({ alter: true });
+
 export default Transaksi;

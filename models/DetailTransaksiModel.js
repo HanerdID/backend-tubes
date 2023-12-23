@@ -73,4 +73,6 @@ DetailTransaksi.belongsTo(Transaksi, {
   as: "transaksi",
 });
 
+// DetailTransaksi.sync({ alter: true });
+
 export default DetailTransaksi;
